@@ -12,7 +12,7 @@ const App = React.createClass({
   render() {
     return (
       <Provider store={store}>
-        <AppContainer centered>
+        <AppContainer centered={false}>
           <Match
             component={Catalog}
             exactly

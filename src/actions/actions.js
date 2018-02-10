@@ -9,10 +9,10 @@ function fetchProductsStart() {
   };
 }
 
-function fetchProductsSuccess(products) {
+function fetchProductsSuccess(items) {
   return {
     type: FETCH_PRODUCTS_SUCCESS,
-    products,
+    items,
   };
 }
 
@@ -20,7 +20,7 @@ export function fetchProducts() {
   return dispatch => {
     dispatch(fetchProductsStart());
 
-    return axios.get('https://sephora-api-frontend-test.herokuapp.com/products')
+    return axios.get('https://sephora-api-frontend-test.herokuapp.com/products?filter[sold_out_eq]=false')
       .then(res => dispatch(fetchProductsSuccess(res.data.data)))
       .catch(res => {
         console.log(res);

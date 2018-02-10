@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import {
   fetchProducts,
 } from '../actions/actions';
+import Section from 'grommet/components/Section';
+import Heading from 'grommet/components/Heading';
+
+import ProductTiles from '../components/ProductTiles';
 
 class CatalogPage extends Component {
   componentDidMount() {
@@ -11,15 +15,29 @@ class CatalogPage extends Component {
   }
 
   render() {
-    console.log(this.props);
+    const { isFetching, items } = this.props.products || {};
+    let content;
+
+    if (isFetching) {
+      content = <Heading>loading products...</Heading>;
+    } else {
+      content = <ProductTiles items={items} />;
+    };
+
     return (
-      <div><p>Hello worldddd</p></div>
+      <Section
+        colorIndex='light-2'
+        full
+      >
+        {content}
+      </Section>
     );
   }
 };
 
 CatalogPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  products: PropTypes.object.isRequired,  
 };
 
 function mapStateToProps(state) {

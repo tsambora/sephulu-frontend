@@ -7,7 +7,7 @@ import {
 function products(
   state = {
     isFetching: false,
-    products: []
+    items: []
   },
   action
 ) {
@@ -19,7 +19,7 @@ function products(
     case FETCH_PRODUCTS_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        products: action.products,
+        items: action.items,
       });
     default:
       return state;
