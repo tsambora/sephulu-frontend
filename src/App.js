@@ -8,20 +8,17 @@ import Catalog from './pages/CatalogPage';
 
 const store = configureStore();
 
-const App = React.createClass({
-  render() {
-    return (
-      <Provider store={store}>
-        <AppContainer centered={false}>
-          <Match
-            component={Catalog}
-            exactly
-            pattern='/'
-          />
-        </AppContainer>
-      </Provider>
-    );
-  }
-});
+export default function App() {
+  return (
+    <Provider store={store}>
+      <AppContainer centered={false}>
+        <Match
+          component={Catalog}
+          exactly
+          pattern='/'
+        />
+      </AppContainer>
+    </Provider>
+  );
+}
 
-export default App;
