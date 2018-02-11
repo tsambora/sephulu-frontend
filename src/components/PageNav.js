@@ -4,7 +4,7 @@ import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
 import { Link } from 'react-router';
 
-export default function PageNav({ hasNext, nextPath, page, prevPath }) {
+export default function PageNav({ hasNext, nextUrl, page, prevUrl }) {
   return (
     <Box
       basis='xsmall'
@@ -17,7 +17,7 @@ export default function PageNav({ hasNext, nextPath, page, prevPath }) {
         justify='center'
       >
         {page !== 1 ?
-          <Link to={prevPath}>
+          <Link to={prevUrl}>
             <Heading
               align='center' 
               strong
@@ -44,7 +44,7 @@ export default function PageNav({ hasNext, nextPath, page, prevPath }) {
         justify='center'
       >
         {hasNext ? 
-          <Link to={nextPath}>
+          <Link to={nextUrl}>
             <Heading
               align='center' 
               strong
@@ -60,8 +60,8 @@ export default function PageNav({ hasNext, nextPath, page, prevPath }) {
 
 PageNav.propTypes = {
   hasNext: PropTypes.bool.isRequired,  
-  nextPath: PropTypes.string.isRequired,  
+  nextUrl: PropTypes.string.isRequired,  
   page: PropTypes.number.isRequired,  
-  prevPath: PropTypes.string.isRequired,  
+  prevUrl: PropTypes.string.isRequired,  
 };
 

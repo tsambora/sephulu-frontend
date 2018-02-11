@@ -42,9 +42,9 @@ class CatalogPage extends Component {
     const page = parseInt(params.page, 10) || 1;
     const navParams = {
       hasNext: hasNext || false,
-      nextPath: `/${page + 1}`,
+      nextUrl: `/${page + 1}`,
       page: page,
-      prevPath: `/${page - 1}`,
+      prevUrl: `/${page - 1}`,
     };
 
     return (

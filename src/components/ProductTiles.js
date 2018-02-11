@@ -10,7 +10,7 @@ import ProductCard from './ProductCard';
 import PageNav from './PageNav';
 
 export default function ProductTiles({ isLoading, items, navParams }) {
-  const { hasNext, nextPath, page, prevPath } = navParams;
+  const { hasNext, nextUrl, page, prevUrl } = navParams;
 
   if (isLoading) {
     return (
@@ -30,9 +30,9 @@ export default function ProductTiles({ isLoading, items, navParams }) {
     <Box>
       <PageNav
         hasNext={hasNext}
-        nextPath={nextPath}
+        nextUrl={nextUrl}
         page={page}
-        prevPath={prevPath}
+        prevUrl={prevUrl}
       />
       <Tiles
         basis='large'
