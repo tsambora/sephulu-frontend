@@ -14,8 +14,7 @@ export default function App() {
       <AppContainer centered={false}>
         <Match
           component={Catalog}
-          exactly
-          pattern='/'
+          pattern='/:page?'
         />
       </AppContainer>
     </Provider>

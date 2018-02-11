@@ -17,7 +17,7 @@ const path = require('path');
 const server = express();
 
 server.get('*.js', function (req, res, next) {
-  req.url = req.url + '.gz';
+  req.url += '.gz';
   res.set('Content-Encoding', 'gzip');
   return next();
 });

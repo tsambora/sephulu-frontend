@@ -9,19 +9,22 @@ function fetchProductsStart() {
   };
 }
 
-function fetchProductsSuccess(items) {
+function fetchProductsSuccess(items, next) {
   return {
     type: FETCH_PRODUCTS_SUCCESS,
     items,
+    hasNext: !!next,
   };
 }
 
-export function fetchProducts() {
+export function fetchProducts(filter) {
+  const { page } = filter;
+
   return dispatch => {
     dispatch(fetchProductsStart());
 
-    return axios.get('https://sephora-api-frontend-test.herokuapp.com/products?filter[sold_out_eq]=false')
-      .then(res => dispatch(fetchProductsSuccess(res.data.data)))
+    return axios.get(`https://sephora-api-frontend-test.herokuapp.com/products?filter[sold_out_eq]=false&page[number]=${page}&page[size]=18`)
+      .then(res => dispatch(fetchProductsSuccess(res.data.data, res.data.links.next)))
       .catch(res => {
         console.log(res);
       });

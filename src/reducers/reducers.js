@@ -20,6 +20,7 @@ function products(
       return Object.assign({}, state, {
         isFetching: false,
         items: action.items,
+        hasNext: action.hasNext,
       });
     default:
       return state;

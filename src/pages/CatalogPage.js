@@ -5,23 +5,46 @@ import {
   fetchProducts,
 } from '../actions/actions';
 import Section from 'grommet/components/Section';
-import Heading from 'grommet/components/Heading';
 
 import ProductTiles from '../components/ProductTiles';
 
 class CatalogPage extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchProducts());
+    const { params } =  this.props;
+    const { page } = params;
+    this.handleFetchProducts(page);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { params } =  this.props;
+    const { page } = params;
+    
+    const { params: prevParams } = prevProps;
+    const { page: prevPage } = prevParams;
+
+    if (page !== prevPage) {
+      this.handleFetchProducts(page);
+    }
+  }
+
+  handleFetchProducts(page) {
+    const filter = {
+      page: page || 1,
+    };
+
+    this.props.dispatch(fetchProducts(filter));
   }
 
   render() {
-    const { isFetching, items } = this.props.products || {};
-    let content;
-
-    if (isFetching) {
-      content = <Heading>loading products...</Heading>;
-    } else {
-      content = <ProductTiles items={items} />;
+    const { isFetching, items, hasNext } = this.props.products || {};
+    
+    const { params } = this.props;
+    const page = parseInt(params.page, 10) || 1;
+    const navParams = {
+      hasNext: hasNext || false,
+      nextPath: `/${page + 1}`,
+      page: page,
+      prevPath: `/${page - 1}`,
     };
 
     return (
@@ -29,7 +52,11 @@ class CatalogPage extends Component {
         colorIndex='light-2'
         full
       >
-        {content}
+        <ProductTiles
+          isLoading={isFetching}
+          items={items}
+          navParams={navParams}
+        />
       </Section>
     );
   }
@@ -37,6 +64,7 @@ class CatalogPage extends Component {
 
 CatalogPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired,  
   products: PropTypes.object.isRequired,  
 };
 
