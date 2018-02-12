@@ -7,7 +7,8 @@ import {
 function products(
   state = {
     isFetching: false,
-    items: []
+    items: [],
+    hasNext: false,    
   },
   action
 ) {

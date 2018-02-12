@@ -8,44 +8,70 @@ import Section from 'grommet/components/Section';
 
 import ProductTiles from '../components/ProductTiles';
 
+const categories = [
+  'tools',
+  'brushes',
+  'markup',
+];
+
 class CatalogPage extends Component {
   componentDidMount() {
-    const { params } =  this.props;
-    const { page } = params;
-    this.handleFetchProducts(page);
+    const { params } =  this.props.match;
+    const { page = 1, category } = params;
+    
+    this.handleFetchProducts(page, category);
   }
 
   componentDidUpdate(prevProps) {
-    const { params } =  this.props;
-    const { page } = params;
+    const { params } =  this.props.match;
+    const { page, category } = params;
     
-    const { params: prevParams } = prevProps;
-    const { page: prevPage } = prevParams;
+    const { params: prevParams } = prevProps.match;
+    const { page: prevPage, category: prevCategory } = prevParams;
 
-    if (page !== prevPage) {
-      this.handleFetchProducts(page);
+    if (page !== prevPage || category !== prevCategory) {
+      this.handleFetchProducts(page, category);
     }
   }
 
-  handleFetchProducts(page) {
+  handleFetchProducts(page, category) {
     const filter = {
-      page: page || 1,
+      page,
+      category,
     };
 
     this.props.dispatch(fetchProducts(filter));
   }
 
-  render() {
-    const { isFetching, items, hasNext } = this.props.products || {};
+  getProductQueries() {
+    const { history, match, products } = this.props;
+    const { params } = match;
+    const { page: pageParam, category } = params;
+    const page = parseInt(pageParam, 10) || 1;
+    const { hasNext } = products;
+
+    const catPath = category ? `/${category}` : '';
+    const onCatChange = (cat) => history.push(`/1/${cat}`);
     
-    const { params } = this.props;
-    const page = parseInt(params.page, 10) || 1;
-    const navParams = {
-      hasNext: hasNext || false,
-      nextUrl: `/${page + 1}`,
-      page: page,
-      prevUrl: `/${page - 1}`,
+    const prevUrl = `/${page - 1}${catPath}`;
+    const nextUrl = `/${page + 1}${catPath}`;
+    const onPrevPage = () => history.push(prevUrl);
+    const onNextPage = () => history.push(nextUrl);
+    
+    return {
+      categories,
+      category,
+      hasNext,
+      onCatChange,
+      onNextPage,
+      onPrevPage,
+      page,
     };
+  }
+
+  render() {
+    const { isFetching, items } = this.props.products || {};
+    const queries = this.getProductQueries();
 
     return (
       <Section
@@ -55,7 +81,7 @@ class CatalogPage extends Component {
         <ProductTiles
           isLoading={isFetching}
           items={items}
-          navParams={navParams}
+          queries={queries}
         />
       </Section>
     );
@@ -64,7 +90,8 @@ class CatalogPage extends Component {
 
 CatalogPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired,  
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,  
   products: PropTypes.object.isRequired,  
 };
 

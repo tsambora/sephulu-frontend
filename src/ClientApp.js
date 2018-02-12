@@ -2,8 +2,8 @@ import 'grommet/scss/vanilla/index';
 
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 
-render(<Router><App /></Router>, document.getElementById('app'));
+render(<BrowserRouter key={Math.random()}><App /></BrowserRouter>, document.getElementById('app'));

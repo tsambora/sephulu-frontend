@@ -9,8 +9,8 @@ import Spinning from 'grommet/components/icons/Spinning';
 import ProductCard from './ProductCard';
 import PageNav from './PageNav';
 
-export default function ProductTiles({ isLoading, items, navParams }) {
-  const { hasNext, nextUrl, page, prevUrl } = navParams;
+export default function ProductTiles({ isLoading, items, queries }) {
+  const { category, categories, hasNext, onCatChange, onNextPage, onPrevPage, page } = queries;
 
   if (isLoading) {
     return (
@@ -29,10 +29,13 @@ export default function ProductTiles({ isLoading, items, navParams }) {
   return (
     <Box>
       <PageNav
+        categories={categories}
+        category={category}
         hasNext={hasNext}
-        nextUrl={nextUrl}
+        onCatChange={onCatChange}
+        onNextPage={onNextPage}
+        onPrevPage={onPrevPage}
         page={page}
-        prevUrl={prevUrl}
       />
       <Tiles
         basis='large'
@@ -56,6 +59,6 @@ export default function ProductTiles({ isLoading, items, navParams }) {
 ProductTiles.propTypes = {
   isLoading: PropTypes.bool.isRequired,  
   items: PropTypes.array.isRequired,  
-  navParams: PropTypes.object.isRequired,  
+  queries: PropTypes.object.isRequired,  
 };
 

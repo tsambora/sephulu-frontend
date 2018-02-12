@@ -2,22 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
-import { Link } from 'react-router';
+import Select from 'grommet/components/Select';
 
-export default function PageNav({ hasNext, nextUrl, page, prevUrl }) {
+export default function PageNav({ category, categories, hasNext, onCatChange, onNextPage, onPrevPage, page }) {
   return (
     <Box
       basis='xsmall'
-      colorIndex='neutral-2'
+      colorIndex='light-1'
       direction='row'
-      size='small'
+      size='large'
     >
-      <Box
-        flex
-        justify='center'
+      <Box 
+        basis='1/2'
+        direction='row'
       >
         {page !== 1 ?
-          <Link to={prevUrl}>
+          <Box
+            flex
+            justify='center'
+            onClick={() => onPrevPage()}
+          >
             <Heading
               align='center' 
               strong
@@ -25,26 +29,25 @@ export default function PageNav({ hasNext, nextUrl, page, prevUrl }) {
             >
               {"<"}
             </Heading>
-          </Link> : <Box />}
-      </Box> 
-      <Box 
-        flex
-        justify='center'
-      >
-        <Heading
-          align='center' 
-          strong
-          tag='h4'
+          </Box> : <Box flex />}
+        <Box 
+          flex
+          justify='center'
         >
-          page {page}
-        </Heading>
-      </Box>
-      <Box
-        flex
-        justify='center'
-      >
-        {hasNext ? 
-          <Link to={nextUrl}>
+          <Heading
+            align='center' 
+            strong
+            tag='h4'
+          >
+            page {page}
+          </Heading>
+        </Box>
+        {hasNext ?
+          <Box
+            flex
+            justify='center'
+            onClick={() => onNextPage()}
+          >
             <Heading
               align='center' 
               strong
@@ -52,16 +55,31 @@ export default function PageNav({ hasNext, nextUrl, page, prevUrl }) {
             >
               {">"}
             </Heading>
-          </Link> : <Box />}
+          </Box> : <Box flex />}
+      </Box>
+      <Box 
+        basis='1/2'
+        flex
+        justify='center'
+        pad='small'
+      >
+        <Select
+          onChange={({ value }) => onCatChange(value)}
+          options={categories}
+          placeHolder='category'
+          value={category}
+        />
       </Box>
     </Box>
   );
 }
 
 PageNav.propTypes = {
+  categories: PropTypes.array.isRequired,  
+  category: PropTypes.string,  
   hasNext: PropTypes.bool.isRequired,  
-  nextUrl: PropTypes.string.isRequired,  
+  onCatChange: PropTypes.func.isRequired,  
+  onNextPage: PropTypes.func.isRequired,  
+  onPrevPage: PropTypes.func.isRequired,  
   page: PropTypes.number.isRequired,  
-  prevUrl: PropTypes.string.isRequired,  
 };
-
