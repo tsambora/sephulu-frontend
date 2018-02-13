@@ -62,12 +62,14 @@ class CatalogPage extends Component {
     const onCatChange = (cat) => history.push(`/?page=1&category=${cat}${priceLtPath}${sortFromPath}`);
     const onPriceChange = (price) => history.push(`/?page=1${catPath}&priceLt=${price}${sortFromPath}`);
     const onSortFromChange = (sortFrom) => history.push(`/?page=1${catPath}${priceLtPath}&sortFrom=${sortFrom}`);
+    const onClearFilter = () => history.push(`/`);
     
     return {
       categories,
       category,
       hasNext,
       onCatChange,
+      onClearFilter,
       onNextPage,
       onPrevPage,
       onPriceChange,

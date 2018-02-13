@@ -15,6 +15,7 @@ export default function ProductTiles({ error, isLoading, items, queries }) {
     categories,
     hasNext,
     onCatChange,
+    onClearFilter,
     onNextPage,
     onPrevPage,
     onPriceChange,
@@ -61,6 +62,7 @@ export default function ProductTiles({ error, isLoading, items, queries }) {
         category={category}
         hasNext={hasNext}
         onCatChange={onCatChange}
+        onClearFilter={onClearFilter}
         onNextPage={onNextPage}
         onPrevPage={onPrevPage}
         onPriceChange={onPriceChange}

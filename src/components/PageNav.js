@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
 import Select from 'grommet/components/Select';
+import Button from 'grommet/components/Button';
 
 export default function PageNav({
   category,
   categories,
   hasNext,
   onCatChange,
+  onClearFilter,
   onNextPage,
   onPrevPage,
   onPriceChange,
@@ -27,7 +29,7 @@ export default function PageNav({
       basis='xsmall'
       colorIndex='light-1'
       direction='row'
-      size='xlarge'
+      size='xxlarge'
     >
       <Box 
         basis='1/2'
@@ -113,6 +115,17 @@ export default function PageNav({
           value={(currentSortFrom && currentSortFrom.label) || ''}
         />
       </Box>
+      <Box 
+        basis='1/2'
+        flex
+        justify='center'
+        pad='small'
+      >
+        <Button
+          label='clear filter'
+          onClick={() => onClearFilter()}
+        />
+      </Box>
     </Box>
   );
 }
@@ -122,6 +135,7 @@ PageNav.propTypes = {
   category: PropTypes.string,  
   hasNext: PropTypes.bool.isRequired,  
   onCatChange: PropTypes.func.isRequired,  
+  onClearFilter: PropTypes.func.isRequired,  
   onNextPage: PropTypes.func.isRequired,  
   onPrevPage: PropTypes.func.isRequired,  
   onPriceChange: PropTypes.func.isRequired,  
