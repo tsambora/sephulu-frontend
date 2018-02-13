@@ -15,15 +15,25 @@ const categories = [
   'markup',
 ];
 
+const prices = [
+  { value: '1000', label: '< 1000' },
+  { value: '2000', label: '< 2000' },
+  { value: '3000', label: '< 3000' },
+  { value: '4000', label: '< 4000' },
+  { value: '5000', label: '< 5000' },
+  { value: '10000', label: '< 10000' }
+];
+
 class CatalogPage extends Component {
   componentDidMount() {
     const { search } =  this.props.location;
     const queries = queryString.parse(search);
-    const { page = 1, category } = queries;
+    const { page = 1, category, priceLt } = queries;
     
     const filter = {
       page,
       category,
+      priceLt
     };
 
     this.props.dispatch(fetchProducts(filter));
@@ -33,15 +43,17 @@ class CatalogPage extends Component {
     const { history, location, products } = this.props;
     const { search } = location;
     const queries = queryString.parse(search);
-    const { page: pageQuery, category } = queries;
+    const { page: pageQuery, category, priceLt } = queries;
     const page = parseInt(pageQuery, 10) || 1;
     const { hasNext } = products;
-    
-    const onCatChange = (cat) => history.push(`/?page=1&category=${cat}`);
-    
+        
     const catPath = category ? `&category=${category}` : '';
-    const onPrevPage = () => history.push(`/?page=${page - 1}${catPath}`);
-    const onNextPage = () => history.push(`/?page=${page + 1}${catPath}`);
+    const priceLtPath = priceLt ? `&priceLt=${priceLt}` : '';
+
+    const onPrevPage = () => history.push(`/?page=${page - 1}${catPath}${priceLtPath}`);
+    const onNextPage = () => history.push(`/?page=${page + 1}${catPath}${priceLtPath}`);
+    const onCatChange = (cat) => history.push(`/?page=1&category=${cat}${priceLtPath}`);
+    const onPriceChange = (price) => history.push(`/?page=1${catPath}&priceLt=${price}`);
     
     return {
       categories,
@@ -50,7 +62,10 @@ class CatalogPage extends Component {
       onCatChange,
       onNextPage,
       onPrevPage,
+      onPriceChange,
       page,
+      priceLt,
+      prices,
     };
   }
 

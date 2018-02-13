@@ -4,7 +4,18 @@ import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
 import Select from 'grommet/components/Select';
 
-export default function PageNav({ category, categories, hasNext, onCatChange, onNextPage, onPrevPage, page }) {
+export default function PageNav({
+  category,
+  categories,
+  hasNext,
+  onCatChange,
+  onNextPage,
+  onPrevPage,
+  onPriceChange,
+  page,
+  priceLt,
+  prices
+}) {
   return (
     <Box
       basis='xsmall'
@@ -70,6 +81,19 @@ export default function PageNav({ category, categories, hasNext, onCatChange, on
           value={category}
         />
       </Box>
+      <Box 
+        basis='1/2'
+        flex
+        justify='center'
+        pad='small'
+      >
+        <Select
+          onChange={({ value }) => onPriceChange(value.value)}
+          options={prices}
+          placeHolder='price'
+          value={priceLt ? `< ${priceLt}` : ''}
+        />
+      </Box>
     </Box>
   );
 }
@@ -81,5 +105,8 @@ PageNav.propTypes = {
   onCatChange: PropTypes.func.isRequired,  
   onNextPage: PropTypes.func.isRequired,  
   onPrevPage: PropTypes.func.isRequired,  
+  onPriceChange: PropTypes.func.isRequired,  
   page: PropTypes.number.isRequired,  
+  priceLt: PropTypes.string,  
+  prices: PropTypes.array.isRequired,  
 };

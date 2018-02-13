@@ -10,7 +10,18 @@ import ProductCard from './ProductCard';
 import PageNav from './PageNav';
 
 export default function ProductTiles({ isLoading, items, queries }) {
-  const { category, categories, hasNext, onCatChange, onNextPage, onPrevPage, page } = queries;
+  const {
+    category,
+    categories,
+    hasNext,
+    onCatChange,
+    onNextPage,
+    onPrevPage,
+    onPriceChange,
+    page,
+    priceLt,
+    prices,
+  } = queries;
 
   if (isLoading) {
     return (
@@ -35,7 +46,10 @@ export default function ProductTiles({ isLoading, items, queries }) {
         onCatChange={onCatChange}
         onNextPage={onNextPage}
         onPrevPage={onPrevPage}
+        onPriceChange={onPriceChange}
         page={page}
+        priceLt={priceLt}
+        prices={prices}
       />
       <Tiles
         basis='large'

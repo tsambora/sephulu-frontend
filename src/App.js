@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore';
-// import { Match } from 'react-router';
 import { Route } from 'react-router-dom';
 import AppContainer from 'grommet/components/App';
 
