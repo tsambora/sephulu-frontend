@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 import {
   fetchProducts,
 } from '../actions/actions';
@@ -16,25 +17,10 @@ const categories = [
 
 class CatalogPage extends Component {
   componentDidMount() {
-    const { params } =  this.props.match;
-    const { page = 1, category } = params;
+    const { search } =  this.props.location;
+    const queries = queryString.parse(search);
+    const { page = 1, category } = queries;
     
-    this.handleFetchProducts(page, category);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { params } =  this.props.match;
-    const { page, category } = params;
-    
-    const { params: prevParams } = prevProps.match;
-    const { page: prevPage, category: prevCategory } = prevParams;
-
-    if (page !== prevPage || category !== prevCategory) {
-      this.handleFetchProducts(page, category);
-    }
-  }
-
-  handleFetchProducts(page, category) {
     const filter = {
       page,
       category,
@@ -44,19 +30,18 @@ class CatalogPage extends Component {
   }
 
   getProductQueries() {
-    const { history, match, products } = this.props;
-    const { params } = match;
-    const { page: pageParam, category } = params;
-    const page = parseInt(pageParam, 10) || 1;
+    const { history, location, products } = this.props;
+    const { search } = location;
+    const queries = queryString.parse(search);
+    const { page: pageQuery, category } = queries;
+    const page = parseInt(pageQuery, 10) || 1;
     const { hasNext } = products;
-
-    const catPath = category ? `/${category}` : '';
-    const onCatChange = (cat) => history.push(`/1/${cat}`);
     
-    const prevUrl = `/${page - 1}${catPath}`;
-    const nextUrl = `/${page + 1}${catPath}`;
-    const onPrevPage = () => history.push(prevUrl);
-    const onNextPage = () => history.push(nextUrl);
+    const onCatChange = (cat) => history.push(`/?page=1&category=${cat}`);
+    
+    const catPath = category ? `&category=${category}` : '';
+    const onPrevPage = () => history.push(`/?page=${page - 1}${catPath}`);
+    const onNextPage = () => history.push(`/?page=${page + 1}${catPath}`);
     
     return {
       categories,
@@ -91,7 +76,7 @@ class CatalogPage extends Component {
 CatalogPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,  
+  location: PropTypes.object.isRequired,  
   products: PropTypes.object.isRequired,  
 };
 
