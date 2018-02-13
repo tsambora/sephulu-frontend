@@ -12,16 +12,22 @@ export default function PageNav({
   onNextPage,
   onPrevPage,
   onPriceChange,
+  onSortFromChange,
   page,
   priceLt,
-  prices
+  prices,
+  sortFrom,
+  sortFroms,
 }) {
+  const currentPrice = (prices || []).find(opt => opt.value === priceLt);
+  const currentSortFrom = (sortFroms || []).find(opt => opt.value === sortFrom);
+
   return (
     <Box
       basis='xsmall'
       colorIndex='light-1'
       direction='row'
-      size='large'
+      size='xlarge'
     >
       <Box 
         basis='1/2'
@@ -91,7 +97,20 @@ export default function PageNav({
           onChange={({ value }) => onPriceChange(value.value)}
           options={prices}
           placeHolder='price'
-          value={priceLt ? `< ${priceLt}` : ''}
+          value={(currentPrice && currentPrice.label) || ''}
+        />
+      </Box>
+      <Box 
+        basis='1/2'
+        flex
+        justify='center'
+        pad='small'
+      >
+        <Select
+          onChange={({ value }) => onSortFromChange(value.value)}
+          options={sortFroms}
+          placeHolder='sort from'
+          value={(currentSortFrom && currentSortFrom.label) || ''}
         />
       </Box>
     </Box>
@@ -106,7 +125,10 @@ PageNav.propTypes = {
   onNextPage: PropTypes.func.isRequired,  
   onPrevPage: PropTypes.func.isRequired,  
   onPriceChange: PropTypes.func.isRequired,  
+  onSortFromChange: PropTypes.func.isRequired,  
   page: PropTypes.number.isRequired,  
   priceLt: PropTypes.string,  
   prices: PropTypes.array.isRequired,  
+  sortFrom: PropTypes.string,  
+  sortFroms: PropTypes.array.isRequired,  
 };

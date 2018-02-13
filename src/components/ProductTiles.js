@@ -18,9 +18,12 @@ export default function ProductTiles({ error, isLoading, items, queries }) {
     onNextPage,
     onPrevPage,
     onPriceChange,
+    onSortFromChange,
     page,
     priceLt,
     prices,
+    sortFrom,
+    sortFroms,
   } = queries;
 
   if (isLoading) {
@@ -61,9 +64,12 @@ export default function ProductTiles({ error, isLoading, items, queries }) {
         onNextPage={onNextPage}
         onPrevPage={onPrevPage}
         onPriceChange={onPriceChange}
+        onSortFromChange={onSortFromChange}
         page={page}
         priceLt={priceLt}
         prices={prices}
+        sortFrom={sortFrom}
+        sortFroms={sortFroms}
       />
       <Tiles
         basis='large'

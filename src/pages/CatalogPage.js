@@ -24,16 +24,22 @@ const prices = [
   { value: '10000', label: '< 10000' }
 ];
 
+const sortFroms = [
+  { value: '-price', label: 'Most expensive' },
+  { value: 'price', label: 'Cheapest' },
+]
+
 class CatalogPage extends Component {
   componentDidMount() {
     const { search } =  this.props.location;
     const queries = queryString.parse(search);
-    const { page = 1, category, priceLt } = queries;
+    const { page = 1, category, priceLt, sortFrom } = queries;
     
     const filter = {
       page,
       category,
-      priceLt
+      priceLt,
+      sortFrom
     };
 
     this.props.dispatch(fetchProducts(filter));
@@ -43,17 +49,19 @@ class CatalogPage extends Component {
     const { history, location, products } = this.props;
     const { search } = location;
     const queries = queryString.parse(search);
-    const { page: pageQuery, category, priceLt } = queries;
+    const { page: pageQuery, category, priceLt, sortFrom } = queries;
     const page = parseInt(pageQuery, 10) || 1;
     const { hasNext } = products;
         
     const catPath = category ? `&category=${category}` : '';
     const priceLtPath = priceLt ? `&priceLt=${priceLt}` : '';
+    const sortFromPath = sortFrom ? `&sortFrom=${sortFrom}` : '';
 
-    const onPrevPage = () => history.push(`/?page=${page - 1}${catPath}${priceLtPath}`);
-    const onNextPage = () => history.push(`/?page=${page + 1}${catPath}${priceLtPath}`);
-    const onCatChange = (cat) => history.push(`/?page=1&category=${cat}${priceLtPath}`);
-    const onPriceChange = (price) => history.push(`/?page=1${catPath}&priceLt=${price}`);
+    const onPrevPage = () => history.push(`/?page=${page - 1}${catPath}${priceLtPath}${sortFromPath}`);
+    const onNextPage = () => history.push(`/?page=${page + 1}${catPath}${priceLtPath}${sortFromPath}`);
+    const onCatChange = (cat) => history.push(`/?page=1&category=${cat}${priceLtPath}${sortFromPath}`);
+    const onPriceChange = (price) => history.push(`/?page=1${catPath}&priceLt=${price}${sortFromPath}`);
+    const onSortFromChange = (sortFrom) => history.push(`/?page=1${catPath}${priceLtPath}&sortFrom=${sortFrom}`);
     
     return {
       categories,
@@ -63,9 +71,12 @@ class CatalogPage extends Component {
       onNextPage,
       onPrevPage,
       onPriceChange,
+      onSortFromChange,
       page,
       priceLt,
       prices,
+      sortFrom,
+      sortFroms,
     };
   }
 
