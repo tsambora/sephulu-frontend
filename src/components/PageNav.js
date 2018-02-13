@@ -32,7 +32,7 @@ export default function PageNav({
       size='xxlarge'
     >
       <Box 
-        basis='1/2'
+        basis='small'
         direction='row'
       >
         {page !== 1 ?
@@ -77,7 +77,7 @@ export default function PageNav({
           </Box> : <Box flex />}
       </Box>
       <Box 
-        basis='1/2'
+        basis='small'
         flex
         justify='center'
         pad='small'
@@ -90,7 +90,7 @@ export default function PageNav({
         />
       </Box>
       <Box 
-        basis='1/2'
+        basis='small'
         flex
         justify='center'
         pad='small'
@@ -103,7 +103,7 @@ export default function PageNav({
         />
       </Box>
       <Box 
-        basis='1/2'
+        basis='small'
         flex
         justify='center'
         pad='small'
@@ -116,7 +116,7 @@ export default function PageNav({
         />
       </Box>
       <Box 
-        basis='1/2'
+        basis='small'
         flex
         justify='center'
         pad='small'
