@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import {
   FETCH_PRODUCTS_START,
   FETCH_PRODUCTS_SUCCESS,
+  FETCH_PRODUCTS_FAILED,
 } from '../actions/actions';
 
 function products(
@@ -9,6 +10,7 @@ function products(
     isFetching: false,
     items: [],
     hasNext: false,    
+    error: null,    
   },
   action
 ) {
@@ -22,6 +24,11 @@ function products(
         isFetching: false,
         items: action.items,
         hasNext: action.hasNext,
+      });
+    case FETCH_PRODUCTS_FAILED:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error,
       });
     default:
       return state;

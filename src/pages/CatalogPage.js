@@ -70,7 +70,7 @@ class CatalogPage extends Component {
   }
 
   render() {
-    const { isFetching, items } = this.props.products || {};
+    const { isFetching, items, error } = this.props.products || {};
     const queries = this.getProductQueries();
 
     return (
@@ -79,6 +79,7 @@ class CatalogPage extends Component {
         full
       >
         <ProductTiles
+          error={error}
           isLoading={isFetching}
           items={items}
           queries={queries}

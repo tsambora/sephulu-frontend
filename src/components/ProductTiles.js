@@ -9,7 +9,7 @@ import Spinning from 'grommet/components/icons/Spinning';
 import ProductCard from './ProductCard';
 import PageNav from './PageNav';
 
-export default function ProductTiles({ isLoading, items, queries }) {
+export default function ProductTiles({ error, isLoading, items, queries }) {
   const {
     category,
     categories,
@@ -32,6 +32,20 @@ export default function ProductTiles({ isLoading, items, queries }) {
       >
         <Heading>
           loading products <Spinning />
+        </Heading>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box
+        align='center'
+        full
+        justify='center'
+      >
+        <Heading>
+          {error}
         </Heading>
       </Box>
     );
@@ -71,6 +85,7 @@ export default function ProductTiles({ isLoading, items, queries }) {
 }
 
 ProductTiles.propTypes = {
+  error: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,  
   items: PropTypes.array.isRequired,  
   queries: PropTypes.object.isRequired,  

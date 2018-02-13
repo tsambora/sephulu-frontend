@@ -4,6 +4,7 @@ import { getApiUrl } from '../utils/urlHelper';
 
 export const FETCH_PRODUCTS_START = 'FETCH_PRODUCTS_START';
 export const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
+export const FETCH_PRODUCTS_FAILED = 'FETCH_PRODUCTS_FAILED';
 
 function fetchProductsStart() {
   return {
@@ -19,14 +20,19 @@ function fetchProductsSuccess(items, next) {
   };
 }
 
+function fetchProductsFailed(err) {
+  return {
+    type: FETCH_PRODUCTS_FAILED,
+    error: err.message,
+  };
+}
+
 export function fetchProducts(filter) {
   return dispatch => {
     dispatch(fetchProductsStart());
 
     return axios.get(getApiUrl('products', filter))
       .then(res => dispatch(fetchProductsSuccess(res.data.data, res.data.links.next)))
-      .catch(res => {
-        console.log(res);
-      });
+      .catch(err => dispatch(fetchProductsFailed(err)));
   };
 }
