@@ -32,6 +32,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              minimize: true,
               url: false
             }
           }
@@ -52,7 +53,8 @@ module.exports = {
           fallback: 'style-loader',
           use: [
             {
-              loader: 'css-loader'
+              loader: 'css-loader',
+              options: { minimize: true } 
             },
             {
               loader: 'sass-loader',
