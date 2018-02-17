@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
+import Section from 'grommet/components/Section';
+
 import {
   fetchProducts,
 } from '../actions/actions';
-import Section from 'grommet/components/Section';
-
 import ProductTiles from '../components/ProductTiles';
 
 const categories = [
@@ -27,9 +27,15 @@ const prices = [
 const sortFroms = [
   { value: '-price', label: 'Most expensive' },
   { value: 'price', label: 'Cheapest' },
-]
+];
 
 class CatalogPage extends Component {
+  constructor() {
+    super();
+
+    this.handleTileClicked = this.handleTileClicked.bind(this);
+  }
+
   componentDidMount() {
     const { search } =  this.props.location;
     const queries = queryString.parse(search);
@@ -86,6 +92,11 @@ class CatalogPage extends Component {
     };
   }
 
+  handleTileClicked(productId) {
+    const { history } = this.props;
+    history.push(`/products/${productId}`);
+  }
+
   render() {
     const { isFetching, items, error } = this.props.products || {};
     const queries = this.getProductQueries();
@@ -99,6 +110,7 @@ class CatalogPage extends Component {
           error={error}
           isLoading={isFetching}
           items={items}
+          onTileClicked={this.handleTileClicked}
           queries={queries}
         />
       </Section>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Card from 'grommet/components/Card';
 import Heading from 'grommet/components/Heading';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ colorIndex, onTileClicked, product, thumbnail }) {
   const { name, price, under_sale: underSale, sale_price: salePrice, category } = product.attributes || {};
   const computedPrice = underSale ?
     price - salePrice
@@ -19,21 +19,25 @@ export default function ProductCard({ product }) {
       <Heading
         tag='h3'
       >
-        in {category}
+        category: {category}
       </Heading>
     </div>
-  )
+  );
 
   return (
     <Card
-      colorIndex='light-1'
+      colorIndex={colorIndex}
       description={description}
       label={name}
-      thumbnail='http://via.placeholder.com/200x100'
+      onClick={onTileClicked ? () => onTileClicked(product.id) : null}
+      thumbnail={thumbnail}
     />
   );
 };
 
 ProductCard.propTypes = {
+  colorIndex: PropTypes.string,
+  onTileClicked: PropTypes.func,
   product: PropTypes.object.isRequired,  
+  thumbnail: PropTypes.string,
 };

@@ -9,7 +9,7 @@ import Spinning from 'grommet/components/icons/Spinning';
 import ProductCard from './ProductCard';
 import PageNav from './PageNav';
 
-export default function ProductTiles({ error, isLoading, items, queries }) {
+export default function ProductTiles({ error, isLoading, items, onTileClicked, queries }) {
   const {
     category,
     categories,
@@ -82,7 +82,10 @@ export default function ProductTiles({ error, isLoading, items, queries }) {
           items.map(product => 
             <Tile key={product.id}>
               <ProductCard
+                colorIndex='light-1'
+                onTileClicked={onTileClicked}
                 product={product}
+                thumbnail='http://via.placeholder.com/200x100'
               />
             </Tile>
           )
@@ -96,6 +99,7 @@ ProductTiles.propTypes = {
   error: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,  
   items: PropTypes.array.isRequired,  
+  onTileClicked: PropTypes.func.isRequired,  
   queries: PropTypes.object.isRequired,  
 };
 
