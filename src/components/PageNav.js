@@ -39,7 +39,7 @@ export default function PageNav({
           <Box
             flex
             justify='center'
-            onClick={() => onPrevPage()}
+            onClick={onPrevPage}
           >
             <Heading
               align='center' 
@@ -65,7 +65,7 @@ export default function PageNav({
           <Box
             flex
             justify='center'
-            onClick={() => onNextPage()}
+            onClick={onNextPage}
           >
             <Heading
               align='center' 
@@ -123,7 +123,7 @@ export default function PageNav({
       >
         <Button
           label='clear filter'
-          onClick={() => onClearFilter()}
+          onClick={onClearFilter}
         />
       </Box>
     </Box>

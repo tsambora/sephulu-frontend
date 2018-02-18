@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getApiUrl } from '../utils/urlHelper';
+import { getProductsUrl, getProductUrl } from '../utils/urlHelper';
 
 export const FETCH_PRODUCTS_START = 'FETCH_PRODUCTS_START';
 export const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
@@ -35,7 +35,7 @@ export function fetchProducts(filter) {
   return dispatch => {
     dispatch(fetchProductsStart());
 
-    return axios.get(getApiUrl('products', filter))
+    return axios.get(getProductsUrl(filter))
       .then(res => dispatch(fetchProductsSuccess(res.data.data, res.data.links.next)))
       .catch(err => dispatch(fetchProductsFailed(err)));
   };
@@ -65,7 +65,7 @@ export function fetchProduct(productId) {
   return dispatch => {
     dispatch(fetchProductStart());
 
-    return axios.get(`https://sephora-api-frontend-test.herokuapp.com/products/${productId}`)
+    return axios.get(getProductUrl(productId))
       .then(res => dispatch(fetchProductSuccess(res.data.data)))
       .catch(err => dispatch(fetchProductFailed(err)));
   };
