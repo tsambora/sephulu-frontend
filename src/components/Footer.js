@@ -33,21 +33,24 @@ export default function AppFooter() {
         <Box>
           <Anchor
             href='https://twitter.com/samborao'
-            target='blank'>
+            target='blank'
+          >
             <TwitterIcon size='medium' />
           </Anchor>
         </Box>
         <Box>
           <Anchor
             href='https://github.com/tsambora'
-            target='blank'>
+            target='blank'
+          >
             <GithubIcon size='medium' />
           </Anchor>
         </Box>
         <Box>
           <Anchor
             href='https://instagram.com/tsambora'
-            target='blank'>
+            target='blank'
+          >
             <InstagramIcon size='medium' />
           </Anchor>
         </Box>
